@@ -1,7 +1,9 @@
+```groovy
 pipeline {
     agent any
 
     stages {
+
         stage('Build') {
             agent {
                 docker {
@@ -50,7 +52,7 @@ pipeline {
                     steps {
                         sh '''
                             npm install -g serve
-                            node_modules/.bin/serve -s build &
+                            serve -s build &
                             sleep 10
                             npx playwright test
                         '''
@@ -58,6 +60,7 @@ pipeline {
                 }
             }
         }
+
         stage('Deploy') {
             agent {
                 docker {
@@ -68,7 +71,7 @@ pipeline {
             steps {
                 sh '''
                     npm install netlify-cli
-                    node_modules/.bin/netlify --version 
+                    node_modules/.bin/netlify --version
                 '''
             }
         }
@@ -80,3 +83,4 @@ pipeline {
         }
     }
 }
+```
